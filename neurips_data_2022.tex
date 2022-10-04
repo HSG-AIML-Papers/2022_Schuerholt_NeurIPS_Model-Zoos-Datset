@@ -1,0 +1,288 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_data_2022
+
+% ready for submission
+% \usepackage{neurips_data_2022}
+\usepackage[nonatbib, final]{neurips_data_2022}
+% \usepackage[nonatbib]{neurips_2022} % preprint
+\usepackage[numbers]{natbib} % use numbers
+
+% to compile a preprint version, add the [preprint] option, e.g.:
+%     \usepackage[preprint]{neurips_data_2022}
+% This will indicate that the work is currently under review.
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+%     \usepackage[final]{neurips_data_2022}
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_data_2022}
+
+% Submissions to the datasets and benchmarks are typically non anonymous,
+% but anonymous submissions are allowed. If you feel that you must submit 
+% anonymously, you can compile an anonymous version by adding the [anonymous] 
+% option, e.g.:
+%     \usepackage[anonymous]{neurips_data_2022}
+% This will hide all author names.
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{todonotes}
+\usepackage{comment}
+\usepackage{array}
+\usepackage{placeins}
+
+\title{Model Zoos: A Dataset of Diverse Populations of Neural Network Models}
+% 
+% Model Zoo Dataset: Diverse Populations of NeuralNetwork Models
+%
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+\author{%
+{\hspace{-12pt}
+Konstantin Sch\"urholt$^1$,  Diyar Taskiran$^1$, Boris Knyazev$^2$, Xavier Giró-i-Nieto$^3$, Damian Borth$^1$
+}\\
+{
+% \hspace{-48pt}
+$^1$ AIML Lab, School of Computer Science, University of St.Gallen 
+}\\
+{
+\hspace{-12pt}
+$^2$ Samsung - SAIT AI Lab, Montreal 
+% $^2$ Samsung Advanced Institute of Technology AI Lab, Montreal \\%; \texttt{b.knyazev@samsung.com} \\
+}\\
+{
+\hspace{-12pt}
+$^3$ Institut de Rob\`otica i Inform\`atica Industrial, Universitat Politècnica de Catalunya 
+}\\
+% {
+% \hspace{-20pt}
+% \texttt{\{firstname\}.\{lastname\}@unisg.ch} $\quad$ \texttt{b.knyazev@samsung.com} $\quad$ \texttt{xavier.giro@upc.edu}
+% }
+}
+
+
+% \author{%
+%     Konstantin Sch\"urholt \\
+%     \texttt{konstantin.schuerholt@unisg.ch} \\
+%     AIML Lab, School of Computer Science \\
+%     University of St.Gallen\\
+%     \And
+%     % \AND
+%     Diyar Taskiran \\
+%     \texttt{diyar.taskiran@student.unisg.ch} \\
+%     AIML Lab, School of Computer Science \\
+%     University of St.Gallen\\
+%     \And
+%     Boris Knyazev \\
+%     \texttt{b.knyazev@samsung.com} \\
+%     Samsung - SAIT AI Lab, Montreal\\
+%     % Samsung Advanced Institute of Technology\\
+%     \And
+%     Xavier Giró-i-Nieto \\
+%     \texttt{xavier.giro@upc.edu} \\
+%     Image Processing Group \\
+%     Universitat Politècnica de Catalunya \\
+%     % \AND
+%     \And
+%     Damian Borth \\ 
+%     \texttt{damian.borth@unisg.ch} \\
+%     AIML Lab, School of Computer Science \\
+%     University of St.Gallen\\
+% }
+
+% \author{%
+%     Konstantin Sch\"urholt \\
+%     \texttt{konstantin.schuerholt@unisg.ch} \\
+%     AIML Lab, University of St.Gallen\\
+%     \And
+%     % \AND
+%     Diyar Taskiran \\
+%     \texttt{diyar.taskiran@student.unisg.ch} \\
+%     AIML Lab, University of St.Gallen\\
+%     \And
+%     Boris Knyazev \\
+%     \texttt{b.knyazev@samsung.com} \\
+%     Samsung - SAIT AI Lab, Montreal\\
+%     % Samsung Advanced Institute of Technology\\
+%     \And
+%     Xavier Giró-i-Nieto \\
+%     \texttt{xavier.giro@upc.edu} \\
+%     Image Processing Group, UPC \\
+%     % Universitat Politècnica de Catalunya \\
+%     % UPC\\
+%     % \AND
+%     \And
+%     Damian Borth \\ 
+%     \texttt{damian.borth@unisg.ch} \\
+%     AIML Lab, University of St.Gallen\\
+% }
+% \author{%
+%     Konstantin Sch\"urholt$^1$,  Diyar Taskiran$^1$, Boris Knyazev$^2$,  Xavier Giró-i-Nieto$^2$, Damian Borth$^1$ \\
+%     \texttt{konstantin.schuerholt@unisg.ch} \\
+%     $^1$ AIML Lab, School of Computer Science, University of St.Gallen\\
+%     $^2$ AI Lab Montreal, Samsung Advanced Institute of Technology\\
+%     $^3$ Image Processing Group, Universitat Politècnica de Catalunya \\
+    % \And
+    % % \AND
+    %  \\
+    % \texttt{diyar.taskiran@student.unisg.ch} \\
+    % AIML Lab, School of Computer Science\\
+    % University of St.Gallen\\
+    % \AND
+    % Boris Knyazev \\
+    % \texttt{borknyaz@gmail.com} \\
+    % AI Lab Montreal\\
+    % % Samsung Advanced Institute of Technology\\
+    % SAIT\\
+    % \And
+    % \\
+    % \texttt{xavier.giro@upc.edu} \\
+    % Image Processing Group \\
+    % % Universitat Politècnica de Catalunya \\
+    % UPC\\
+    % % \AND
+    % \And
+    %  \\ 
+    % \texttt{damian.borth@unisg.ch} \\
+    % AIML Lab, School of Computer Science\\
+    % University of St.Gallen\\
+% }
+
+
+\begin{document}
+
+\maketitle
+
+
+%
+% - focus on model zoo
+%   - generating factores
+%   - discriminate -> prediction of properties
+%                   -> analyse & diagnostic?
+%                   -> learning dynamics?
+%   - generative -> fine-tuning Transfer learning?
+%               -> ensembles?
+%   - representation learning
+%
+%
+%
+\begin{abstract}
+In the last years, neural networks (NN) have evolved from laboratory environments to the state-of-the-art for many real-world problems. 
+It was shown that NN models (i.e., their weights and biases) evolve on unique trajectories in weight space during training. Following, a population of such neural network models (referred to as \textit{model zoo}) would form structures in weight space. We think that the geometry, curvature and smoothness of these structures contain information about the state of training and can reveal latent properties of individual models.
+%
+With such \textit{model zoos}, one could investigate novel approaches for (i) model analysis, (ii) discover unknown learning dynamics, (iii) learn rich representations of such populations, or (iv) exploit the \textit{model zoos} for generative modelling of NN weights and biases.
+%
+%--- damian above
+%In the last years, neural networks (NNs) have evolved from laboratory environments to the state-of-the-art for many real-world problems. 
+%% Due to the properties of the loss surface and training methods, we hypothesize that NN models evolve on unique, smooth trajectories in weight space during training. Following, a population of such NN models (referred to as “model zoo”) would form topological structures in weight space. Further, the geometry, curvature and smoothness of these structures may contain information about the state of training and can reveal latent properties of individual models.
+%Populations of NNs are an interesting object to study, to investigate commonalities between models, search for structures in weight space or examine the training trajectories.
+%
+%% Once such model zoos are available, one could investigate novel
+%% With such zoos, one could investigate novel
+%% approaches for (i) model analysis, (ii) discover unknown learning dynamics, (iii) learn rich representations of such populations, or (iv) exploit the model zoos for generative modelling of NN weights and biases. 
+%%
+%Consequently, existing work uses different unstructured model populations for (i) model analysis, (ii) to identify learning dynamics, (iii) learn rich representations of such populations, or (iv) exploit the model zoos for generative modelling of NN weights and biases. 
+% 
+%
+Unfortunately, the lack of standardized \textit{model zoos} and available benchmarks significantly increases the friction for further research about populations of NNs. With this work, we publish a novel dataset of \textit{model zoos} containing systematically generated and diverse populations of NN models for further research. In total the proposed model zoo dataset is based on eight image datasets, consists of 27 \textit{model zoos} trained with varying hyperparameter combinations and includes 50'360 unique NN models as well as their sparsified twins, resulting in over 3’844’360 collected model states. 
+%
+Additionally, to the model zoo data we provide an in-depth analysis of the zoos and provide benchmarks for multiple downstream tasks.
+The dataset can be found at \href{www.modelzoos.cc}{www.modelzoos.cc}.\looseness-1
+%
+%
+%
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{01_introduction}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Related Work
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{02_related_work}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Model Zoo Dataset Generation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{03_dataset_generation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Analysis of Model Zoos
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{04_analysis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Benchmarks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{05_benchmarks}
+
+
+% \section{Reproducibility etc}
+% everything can be found online...
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Conclusion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+To enable the investigation of populations of neural network models, we release a novel dataset of model zoos with this work. 
+These model zoos contain systematically generated and diverse populations of 50'360 neural network models comprised of 3'844'360 collective model states. 
+The released model zoos come with a comprehensive analysis and initial benchmarks for multiple downstream tasks and invite further work in the direction of the following use cases: (i) model analysis, (ii) learning dynamics, (iii) representation learning and (iv) model generation.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acknowledgments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgments}
+This work was partially funded by Google Research Scholar Award, the University of St.Gallen Basic Research Fund, and project PID2020-117142GB-I00 funded by MCIN/ AEI /10.13039/501100011033.
+% KS and DB are thankful to the University of St.Gallen Basic Research Fund, which funded the initial phase of this work.
+% \todo{@all: could you add your Acknowledgements / funding here?}
+We are thankful to Erik Vee for insightful discussions and Michael Mommert for editorial support.
+% We also appreciate the reviewers' constructive feedback that improved our work.
+
+
+\FloatBarrier
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% REFERENCES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \section*{References}
+
+\bibliographystyle{plainnat}
+% \bibliography{./bibliography2.bib}
+\bibliography{./bibliography_auto.bib,./bibliography_manual.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Checklist
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{99_checklist}
+
+\appendix
+
+\newpage
+\input{999_Appendix}
+
+\end{document}

@@ -1,0 +1,209 @@
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Model Zoo Generation Details}
+\label{app:zoo_generation}
+In our model zoos, we use three architectures. Two of them rely on a general CNN architecture, the third is a common ResNet-18\citep{heDeepResidualLearning2016}. 
+For the first two architectures, use the general CNN architecture in two sizes, detailed in Table \ref{tab:model_zoo_architecture}. 
+By varying different generating factors listed in Table \ref{tab:generating_factors}, we create a grid of configurations, where each node represents a model. 
+Each node is instantiated as a model and trained with the exact same training protocol. 
+We chose the hyperparameters with diversity in mind.
+The ranges for each of the generating factors are chosen such that they can lead to functioning models with a corresponding set of other generating factors.
+Nonetheless, that leads to some nodes with uncommon and less than promising configurations.
+
+The code to generate the models can be found on \href{www.modelzoos.cc}{www.modelzoos.cc}. With that code, the model zoos can be replicated, changed or extended. 
+We trained our model zoos on CPU nodes with up to 64 CPUs. Training a zoo takes between 3h (small models, small configuration and small dataset) and 3 days (large models, large configuration and large dataset). 
+Overall, the generation of the zoos took around 30'000 CPU hours.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h!]
+    \centering
+    \begin{minipage}{0.8\textwidth}
+    \centering
+    {\small
+    \caption{CNN architecture details for the models in model zoos. }
+    \label{tab:model_zoo_architecture}
+    \begin{tabular}{@{}llcc@{}}
+        \toprule
+        \textbf{Layer}          & \textbf{Component} & \textbf{CNN small} & \textbf{CNN large} \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        \multirow{5}{*}{Conv 1} & input channels     & 1 or 3          & 3       \\
+                                & output channels    & 8            & 16        \\
+                                & kernel size        & 5            & 3        \\
+                                & stride             & 1            & 1        \\
+                                & padding            & 0            & 0        \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        Max Pooling             & kernel size        & 2            & 2        \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        Activation              &                    &                      \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        \multirow{5}{*}{Conv 2} & input channels     & 8            & 16        \\
+                                & output channels    & 6            & 32        \\
+                                & kernel size        & 5            & 3         \\
+                                & stride             & 1            & 1        \\
+                                & padding            & 0            & 0        \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        Max Pooling             & kernel size        & 2            & 2        \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        Activation              &          &             &          \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        \multirow{5}{*}{Conv 3} & input channels     & 6            & 32        \\
+                                & output channels    & 4            & 15        \\
+                                & kernel size        & 2            & 3        \\
+                                & stride             & 1            & 1        \\
+                                & padding            & 0            & 0       \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        Activation              &          &                      \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        \multirow{2}{*}{Linear 1} & input channels     & 36         & 60          \\
+                                & output channels    & 20           & 20        \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        Activation              &          &                      \\
+        \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3}  \cmidrule(rl){4-4}
+        \multirow{2}{*}{Linear 2} & input channels     & 20         & 20          \\
+                                & output channels    & 10           & 10        \\
+        \midrule
+        Total Parameters        &                   & 2464 or 2864     & 10853 \\
+        \bottomrule
+    \end{tabular}
+    }
+    \end{minipage}
+
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{table}[]
+% \begin{tabular}{lllllllll}
+% \cline{1-8}
+% \end{tabular}
+% \end{table}
+
+% \begin{table}[]
+% {
+% \scriptsize
+% \caption{Generating factors of the model zoos. Several values for each parameter define the grid.
+% \texttt{Arch} denotes the architecture: CNN (s) - small CNN architecture, CNN (l) - larger CNN architecture, RN-18 - ResNet-18.
+% \texttt{Init} denotes the initalization methods: U - uniform, N - normal, KU - Kaiming Uniform, KN - Kaiming Normal.
+% \texttt{Activation} denotes the activation function: T - Tanh, S - Sigmoid, R - ReLU, G - GeLU.
+% \texttt{Optim} denotes the optimizer: AD - Adam, SGD - Stochastic Gradient Descent.
+% Models with learning rates denoted with * have been trained with a one-cycle LR scheduler, the listed LR is the maximum value.
+% }
+% \label{tab:generating_factors}
+% {
+% \centering
+% \begin{tabular}{@{}lllccccccc@{}}
+% \toprule
+% Dataset                        & Arch & Config & \texttt{Init}           & \texttt{Activation}     & \texttt{Otpim}     & \texttt{LR}        & \texttt{WD}              & \texttt{Dropout}       & \texttt{Seed}   \\
+% \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3} \cmidrule(rl){4-4} \cmidrule(rl){5-5}  \cmidrule(rl){6-6}  \cmidrule(rl){7-7}  \cmidrule(rl){8-8}  \cmidrule(rl){9-9} \cmidrule(rl){10-10} 
+% \multirow{3}{*}{MNIST}         & CNN (s) & Seed          & U              & T              & AD          & 3e-4      & 0             & 0           & 1-1000 \\
+%                                & CNN (s) & Hyp-10-r   & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-3, 1e-4      & 0, 0.5      & $\sim 10$     \\
+%                                & CNN (s) & Hyp-10-f    & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-3, 1e-4      & 0, 0.5      & 1-10   \\
+% \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3} \cmidrule(rl){4-4} \cmidrule(rl){5-5}  \cmidrule(rl){6-6}  \cmidrule(rl){7-7}  \cmidrule(rl){8-8}  \cmidrule(rl){9-9} \cmidrule(rl){10-10} 
+% \multirow{3}{*}{F-MNIST}       & CNN (s) & Seed          & U              & T              & AD          & 3e-4      & 0             & 0           & 1-1000 \\
+%                                & CNN (s) & Hyp-10-r   & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-3, 1e-4      & 0, 0.5      & $\sim 10$        \\
+%                                & CNN (s) & Hyp-10-f    & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-3, 1e-4      & 0, 0.5      & 1-10   \\
+% \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3} \cmidrule(rl){4-4} \cmidrule(rl){5-5}  \cmidrule(rl){6-6}  \cmidrule(rl){7-7}  \cmidrule(rl){8-8}  \cmidrule(rl){9-9} \cmidrule(rl){10-10} 
+% \multirow{3}{*}{SVHN}          & CNN (s) & Seed          & U              & T              & AD          & 3e-3      & 0             & 0           & 1-1000 \\
+%                                & CNN (s) & Hyp-10-r   & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-3, 1e-4, 0 & 0, 0.3, 0.5 & $\sim 10$        \\
+%                                & CNN (s) & Hyp-10-f    & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-3, 1e-4, 0 & 0, 0.3, 0.5 & 1-10   \\
+% \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3} \cmidrule(rl){4-4} \cmidrule(rl){5-5}  \cmidrule(rl){6-6}  \cmidrule(rl){7-7}  \cmidrule(rl){8-8}  \cmidrule(rl){9-9} \cmidrule(rl){10-10} 
+% \multirow{3}{*}{USPS}          & CNN (s) & Seed          & U              & T              & AD          & 3e-4      & 1e-3            & 0           & 1-1000 \\
+%                                & CNN (s) & Hyp-10-r   & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-2, 1e-3      & 0, 0.5      & $\sim 10$        \\
+%                                & CNN (s) & Hyp-10-f    & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-2, 1e-3      & 0, 0.5      & 1-10   \\
+% \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3} \cmidrule(rl){4-4} \cmidrule(rl){5-5}  \cmidrule(rl){6-6}  \cmidrule(rl){7-7}  \cmidrule(rl){8-8}  \cmidrule(rl){9-9} \cmidrule(rl){10-10} 
+% \multirow{3}{*}{CIFAR10}       & CNN (s) & Seed          & KU            & G              & AD          & 1e-4      & 1e-2            & 0           & 1-1000 \\
+%                                & CNN (s) & Hyp-10-r   & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3      & 1e-2, 1e-3      & 0, 0.5      & $\sim 10$        \\
+%                                & CNN (s) & Hyp-10-f    & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3      & 1e-2, 1e-3      & 0, 0.5      & 1-10   \\
+% \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3} \cmidrule(rl){4-4} \cmidrule(rl){5-5}  \cmidrule(rl){6-6}  \cmidrule(rl){7-7}  \cmidrule(rl){8-8}  \cmidrule(rl){9-9} \cmidrule(rl){10-10} 
+% \multirow{3}{*}{CIFAR10}       & CNN (l) & Seed          & KU            & G              & AD          & 1e-4      & 1e-2            & 0           & 1-1000 \\
+%                                & CNN (l) & Hyp-10-r   & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3      & 1e-2, 1e-3      & 0, 0.5      & $\sim 10$        \\
+%                                & CNN (l) & Hyp-10-f    & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3      & 1e-2, 1e-3      & 0, 0.5      & 1-10   \\
+% \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3} \cmidrule(rl){4-4} \cmidrule(rl){5-5}  \cmidrule(rl){6-6}  \cmidrule(rl){7-7}  \cmidrule(rl){8-8}  \cmidrule(rl){9-9} \cmidrule(rl){10-10} 
+% \multirow{3}{*}{STL (s)}       & CNN (s) & Seed          & KU            & T              & AD          & 1e-4      & 1e-3            & 0           & 1-1000 \\
+%                                & CNN (s) & Hyp-10-r   & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-2, 1e-3      & 0, 0.5      & $\sim 10$        \\
+%                                & CNN (s) & Hyp-10-f    & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-2, 1e-3      & 0, 0.5      & 1-10   \\
+% \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3} \cmidrule(rl){4-4} \cmidrule(rl){5-5}  \cmidrule(rl){6-6}  \cmidrule(rl){7-7}  \cmidrule(rl){8-8}  \cmidrule(rl){9-9} \cmidrule(rl){10-10} 
+% \multirow{3}{*}{STL}       & CNN (l) & Seed          & KU            & T              & AD          & 1e-4      & 1e-3            & 0           & 1-1000 \\
+%                                & CNN (l) & Hyp-10-r   & U, N, KU, KN & T, S, R, G     & AD, SGD     & 1e-3,1e-4 & 1e-2, 1e-3      & 0, 0.5      & $\sim 10$        \\
+%                                & CNN (l) & Hyp-10-f    & U, N, KU, KN & T, S, R, G & AD, SGD & 1e-3,1e-4 & 1e-2, 1e-3      & 0, 0.5      & 1-10   \\ 
+% \cmidrule(r){1-1} \cmidrule(rl){2-2}  \cmidrule(rl){3-3} \cmidrule(rl){4-4} \cmidrule(rl){5-5}  \cmidrule(rl){6-6}  \cmidrule(rl){7-7}  \cmidrule(rl){8-8}  \cmidrule(rl){9-9} \cmidrule(rl){10-10} 
+% CIFAR10                         & RN-18 & Seed          & KU            & R              & SGD          & 1e-4*      & 5e-4            & 0           & 1-1000 \\
+% CIFAR10                         & RN-18 & Seed          & KU            & R              & SGD          & 1e-4*      & 5e-4            & 0           & 1-1000 \\
+% CIFAR10                         & RN-18 & Seed          & KU            & R              & SGD          & 1e-4*      & 5e-4            & 0           & 1-1000 \\
+
+% \bottomrule
+% \end{tabular}
+% }
+% }
+
+% \end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Data Management and Accessibility of Model Zoos}
+\label{app:data_management}
+
+\textbf{Data Management and Documentation:}
+To ensure that every zoo is reproducible, expandable, and understandable, we document each zoo. 
+For each zoo, a Readme file is generated, displaying basic information about the zoo.
+The exact search pattern and the training protocol used to train the zoo is saved in a  in a machine-readable json file. 
+To make the zoos expandable, the dataset used to train the zoo and a file describing the model architecture are included. 
+The model class definition in pytorch is included with the zoo.
+Each model is saved along with a json file containing its exact hyperparameter combination. A second json file contains the the performance metrics during training. Model checkpoints are saved for every epoch.
+To enable further training of the models in the zoo, a checkpoint recording the optimizer state is saved for the final epoch of each model. 
+%
+All data can be found on the model zoo website as well directly from Zenodo. \looseness-1
+
+%
+%
+%
+\textbf{Accessibility:}
+We ensure the technical accessibility of the data by hosting it on Zenodo, where the data will be hosted for at least 20 years.
+Further, we take steps to reduce access barriers by providing code for data loading and preprocessing. 
+With that we reduce the friction associated with analyzing of the raw zoo files. 
+Further, it improves consistency by reducing errors associated with extracting information from the zoo.
+%
+To that end, we provide a PyTorch dataset class encapsulating all model zoos for easy and quick access within the PyTorch framework. A Tensorflow counterpart will follow.
+%
+All code can be found on the model zoo website as well as a code repository on github.
+To ensure conceptional accessibility, we include detailed insights, visualizations and the analysis of the model zoo (Sec. \ref{sec:analysis}) with each zoo.
+%
+Mode details can be found on the dataset website \href{www.modelzoos.cc}{www.modelzoos.cc}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+% \clearpage
+\section{Dataset Documentation and Intended Uses}
+% documentation
+The main dataset documentation can be found at \href{www.modelzoos.cc}{www.modelzoos.cc} and is detailed in the paper in Section \ref{sec:data_management}. 
+There, we provide links to the zoos, which are hosted on Zenodo as well as analysis of the zoos. In the future, the analysis will be systematically extended. 
+The documentation includes code to reproduce, adapt or extend the zoos, code to reproduce the benchmark results, as well as code to load and preprocess the datasets.
+Dataset Metadata and DOIs are automatically provided by Zenodo, which also guarantees the long-term availability of the data. 
+Files are stored as \texttt{zip}, \texttt{json} and \texttt{pt} (pytorch) files. All libraries to read and use the files are common and open source. We provide the code necessary to read and interpret the data.\looseness-1
+
+% Intended Use
+The datasets are synthetic and intended to investigate populations of neural network models, i.e., to develop or evaluate model analysis methods, progress the understanding of learning dynamics, serve as datasets for representation learning on neural network models, or as a basis for new model generation methods. More information regarding the usage is given in the paper.
+
+% Due to the synthetic nature of the datasets without any socio-economic and
+% personal information, we refrain from providing datasheets for datasets, dataset
+% nutrition labels, data statements for NLP, and accountability frameworks. However, we
+% We are happy to provide them if desired or answer any other question regarding the newly
+% introduced datasets.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+\section{Author Statement}
+The dataset is publicly available under \href{www.modelzoos.cc}{www.modelzoos.cc} and licensed under the Creative Commons Attribution 4.0 International license (CC-BY 4.0).
+% The authors state that they bear all responsibility in case of violation of rights, etc., and confirmation of the data license. 
+The authors state that they bear responsibility under the CC-BY 4.0 license.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+\section{Hosting, Licensing, and Maintenance Plan}
+The dataset is publicly available under \href{www.modelzoos.cc}{www.modelzoos.cc} and licensed under the Creative Commons Attribution 4.0 International license (CC-BY 4.0).
+The landing page contains documentation, code and references to the datasets, as detailed in the paper in Section \ref{sec:data_management}.
+The datasets are hosted on Zenodo, to ensure (i) long-term availability (at least 20 years), (ii) automatic searchable dataset meta data, (iii) DOIs for dataset, and (iv) dataset versioning. 
+The authors will maintain the datasets, but invite the community to engage. Code to recreate, correct, adapt, or extend the datasets is provided, s.t. maintenance can be taken over by the community at need. The github repository allows the community to discuss, interact, add or change code. \looseness-1

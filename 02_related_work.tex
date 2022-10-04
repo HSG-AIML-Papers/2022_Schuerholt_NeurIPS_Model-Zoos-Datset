@@ -1,0 +1,25 @@
+\section{Existing Populations of Neural Networks Models}
+\vspace{-1pt}
+% \paragraph{Neural Network Model Zoos}
+With the increase in usage of neural networks, requirements for evaluation, testing and certification have grown. 
+% The analysis of models can be considered a part of explainable AI \citep{molnarInterpretableMachineLearning2020,murdochInterpretableMachineLearning2019,fongInterpretableExplanationsBlack2017}, an umbrella term for methods shedding light on the inner workings of models. 
+Methods to analyze NN models may attempt to visualize salient features for a given class~\citep{zeilerVisualizingUnderstandingConvolutional2014,karpathyVisualizingUnderstandingRecurrent2015,yosinskiUnderstandingNeuralNetworks2015}, investigate the robustness of models to specific types of noise \citep{zintgrafVisualizingDeepNeural2017,dabkowskiRealTimeImage2017}, predict model properties from model features \citep{yakTaskArchitectureIndependentGeneralization2019, jiangPredictingGeneralizationGap2019,corneanuComputingTestingError2020} or compare models based on their activations \citep{raghuSVCCASingularVector2017,morcosInsightsRepresentationalSimilarity2018,nguyenWideDeepNetworks2020}
+%
+However, while most of these methods rely on common (image) datasets to train and evaluate their models, there is no common dataset of neural network models to compare the evaluation methods on.
+Model zoos as common evaluation datasets can be a step up to evaluate the evaluation methods.
+%
+
+There are only few publications who use model zoos.
+In \citep{liuKnowledgeFlowImprove2019}, zoos of pre-trained models are used as teacher models to train a target model. 
+Similarly, \citep{shuZooTuningAdaptiveTransfer2021} propose a method to learn a combination of the weights of models from a zoo for a new task. 
+\citep{zhouJittorGANFasttrainingGenerative2021} uses a zoo of GAN models trained with different methods to accelerate GAN training.
+To facilitate continual learning, \citep{rameshModelZooGrowing2022} propose to generate zoos of models trained on different tasks or experiences, and to ensemble them for future tasks.\looseness-1
+
+Larger model zoos containing a few thousand models are used in \citep{unterthinerPredictingNeuralNetwork2020} to predict the accuracy of the models from their weights. Similarly, \citep{eilertsenClassifyingClassifierDissecting2020} use zoos of larger models to predict hyperparameters from the weights.
+In \citep{gavrikovCNNFilterDB2022}, a large collection of 3x3 convolutional filters trained on different datasets is presented and analysed.
+% 
+Other work identifies structures in the form of subspaces with beneficial properties \citep{lucasAnalyzingMonotonicLinear,wortsmanLearningNeuralNetwork2021,bentonLossSurfaceSimplexes2021}.
+\citep{schurholtSelfSupervisedRepresentationLearning2021} use zoos to learn self-supervised representations on the weights of the models in the zoo. The authors demonstrate that the learned representations have high predictive capabilities for model properties such as accuracy, generalization gap, epoch and various hyperparameters. Further, they investigate the impact of the generating factors of model zoos on their properties. 
+\citep{schurholtHyperRepresentationsPreTrainingTransfer2022,schurholtHyperRepresentationsGenerativeModels2022} demonstrate that learned representations can be instantiated in new models, as initialization for fine-tuning or transfer learning. 
+This work systematically extends their zoos to more datasets and architectures.\looseness-1
+%

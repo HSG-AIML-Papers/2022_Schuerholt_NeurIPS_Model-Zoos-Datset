@@ -1,0 +1,87 @@
+\section{Potential Use-Cases \& Applications}
+\label{sec:usecases}
+While populations of NNs have been used in previous work, they still are relatively novel as a dataset. As use-cases for such datasets may not be obvious, this section presents potential use-cases and applications. For all use-cases, we collect related work that uses model populations. Here, the zoos may be used as data or to evaluate the methods. For some of the use-cases, the analysis above provides support. Lastly, we suggest ideas for future work which we hope can inspire the community to make use of the model zoos. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Discriminative 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Model Analysis}
+The analysis of trained models is an important and difficult step in the machine learning pipeline. 
+Commonly, models are applied on hold-out test sets, which may contain difficult cases with specific properties~\citep{lecunDeepLearning2015}. 
+Other approaches identify subsections of input data that is relevant for a specific output ~\citep{yosinskiUnderstandingNeuralNetworks2015,karpathyVisualizingUnderstandingRecurrent2015,zintgrafVisualizingDeepNeural2017}. 
+A third group of methods compares the activations of models, e.g. the cka method used in Sec. \ref{sec:analysis} to measure diversity~\citep{kornblithSimilarityNeuralNetwork2019}.
+
+% \textbf{Existing Methods Using Model Populations}
+Populations of models have been used to identify commonalities in model weights, activations, or graph structure which are predictive for model properties. 
+Some methods use the weights, weight-statistics or eigenvalues of the weight matrices as features to predict a model's accuracy or hyper-parameters ~\citep{unterthinerPredictingNeuralNetwork2020,eilertsenClassifyingClassifierDissecting2020,martinTraditionalHeavyTailedSelf2019}. Recently, ~\citep{schurholtSelfSupervisedRepresentationLearning2021} have learned self-supervised representation of the weights and demonstrate their usefulness for predicting model properties. Other publications use activations to approximate intermediate margins ~\citep{yakTaskArchitectureIndependentGeneralization2019, jiangPredictingGeneralizationGap2019} or graph connectivity features ~\citep{corneanuComputingTestingError2020} to predict the generalization gap or test accuracy. 
+Standardized, diverse model zoos may facilitate development of new methods, or be used as evaluation dataset for existing model analysis, interpretability or comparison method.
+ 
+% \textbf{Future Work}
+Previous work as well as the experiment results in Sec \ref{sec:analysis} indicate that even more complex model properties might be predicted from the weights. By studying populations of models, in-depth diagnostics of models, such as whether a model learned a specific bias, may be based on the weights or topology of models. 
+Lastly, model properties as well of the weights may be used to derive a model 'identity' along the training trajectory, to allow for NN versioning. \looseness-1 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Learning Dynamics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Learning Dynamics}
+% 
+Analysing and utilizing the learning dynamics of models has been a useful practice. 
+For example, early stopping~\citep{FinnoffImprovingModelSelection1993}, which determines when to end training at minimal generalization error based on a cross validation set and has become standard in machine learning practice. 
+
+% \textbf{Existing Methods Using Model Populations}
+More recently, methods have exploited zoos of models. Population based training~\citep{jaderbergPopulationBasedTraining2017} evaluates the performance of model candidates in a population, decides which of the candidates to pursue further and which to give up. HyperBand evaluates performance metrics for groups of models to optimize hyperparameters \citep{liHyperbandNovelBanditBased2018, liSystemMassivelyParallel2020}.
+Research in Neural Architecture Search was greatly simplified by the NASBench dataset family \citep{yingNASBench101ReproducibleNeural2019}, which contains performance metrics for varying hyperparameter choices. Our model zoos extend these datasets by adding models including their weights at states throughout training, which may open new doors for new approaches.
+
+% \textbf{Future Work}
+The accuracy distribution of our model zoos become relatively broad if hyperparameters are varied (Figure \ref{fig:boxplots}).
+For early stopping or population based methods, identifying a good range of hyperparameters to try, and then identifying those candidates that will perform best towards the end of training, is a challenging and relevant task. 
+Our model zoos may be used to develop and evaluate methods to that end.
+Beyond that, diverse model zoos offer the opportunity to make further steps of understanding and exploiting the learning dynamics of models, i.e., by studying the regularities of generalizing and overfitting models. 
+The shape and curvature of training trajectories may contain rich information on the state of model training.
+Such information could be used to monitor model training, or adjust hyperparameters to achieve better results.
+The sparsified model zoos add several potential use-cases. They may be used to study the sparsification performance on a population level, study emerging patterns of populations of sparse models, or the relation of full models and their sparse counterparts. 
+\looseness-1
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Representation Learning
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Representation Learning}
+NN models have grown in recent years, and with them the dimensionality of their parameter space. 
+Empirically, it is more effective to train large models to high performance and distill them in a second step, than to directly train the small models~\citep{hoeflerSparsityDeepLearning2021,liuWeActuallyNeed2021}.
+This and other related problems raise interesting questions. What are useful regularities in NN weights? How can the weight space be navigated in a more efficient way?
+
+% \textbf{Existing Methods Using Model Populations}
+Recent work has attempted to learn lower dimensional representations of the weights of NNs~\citep{haHyperNetworks2016,ratzlaffHyperGANGenerativeModel2019,zhangGraphHyperNetworksNeural2019,knyazevParameterPredictionUnseen2021,schurholtSelfSupervisedRepresentationLearning2021,schurholtHyperRepresentationsGenerativeModels2022,schurholtHyperRepresentationsPreTrainingTransfer2022}. 
+Such representations can reveal the latent structure of NN weights.
+Other approaches identify subspaces in the weight space which relate to high performance or generalization \citep{wortsmanLearningNeuralNetwork2021,lucasMonotonicLinearInterpolation2021,bentonLossSurfaceSimplexes2021}.
+In~\citep{schurholtSelfSupervisedRepresentationLearning2021}, representations learned on model zoos achieve higher performance in predicting model properties than weights or weight statistics. 
+~\citep{knyazevParameterPredictionUnseen2021} proposes a method to learn from a population of diverse neural architectures to generate weights for unseen architectures in a single forward pass.
+
+% \textbf{Future Work}
+Our model zoos can be either a dataset to train representations on as in~\citep{schurholtSelfSupervisedRepresentationLearning2021} or \citep{bentonLossSurfaceSimplexes2021}, or as common dataset to validate such methods.
+Learned representations may bring better understanding of the weight space and thus help to reduce the computational cost and improve performance of NNs.\looseness-1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Generative 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Generating New Models}
+In conventional machine learning, models are randomly initialized and then trained on data. 
+As that procedure may require large amounts of data and computational resources, fine-tuning and transfer learning are more efficient training approaches that re-use already trained models for a different task or dataset~\citep{yosinskiHowTransferableAre2014,fengTransferredDiscrepancyQuantifying2020}.
+%
+% \textbf{Existing Methods Using Model Populations}
+% Model ensembles are a simple and proven way to improve performance and robustness, by compensating individual weaknesses and complementing individual strengths \cite{hansenNeuralNetworkEnsembles1990}.
+Other publications have extended the concept of transfer learning from a one-to-one setup to many-to-one setups~\citep{liuKnowledgeFlowImprove2019,shuZooTuningAdaptiveTransfer2021}. 
+Both approaches attempt to combine learned knowledge from several source models into a single target model. 
+Most recently, ~\citep{schurholtHyperRepresentationsGenerativeModels2022,schurholtHyperRepresentationsPreTrainingTransfer2022} have generated unseen NN models with desireable properties from representations learned on model zoos. The generated models were able to outperform random initialization and pretraining in transfer-learning regimes. In \citep{peeblesLearningLearnGenerative2022}, a transformer is trained on a population of models with diffusion to generate model weights.\looseness-1
+
+% \textbf{Future Work}
+All these approaches require suitable and diverse models to be available. Further, the exact properties of models suitable for generative use, transfer learning or ensembles are still in discussion~\citep{fengTransferredDiscrepancyQuantifying2020}.
+Population based transfer learning methods such as zoo-tuning \citep{shuZooTuningAdaptiveTransfer2021}, knowledge flow \citep{liuKnowledgeFlowImprove2019} or model-zoo \citep{rameshModelZooGrowing2022} have been demonstrated on populations with only few models. Populations for these methods ideally are as diverse as possible, so that they provide different features. 
+% The proposed zoos may help towards both ends. 
+Investigating the models in the proposed zoos may help identifying models which lend themselves for transfer learning or ensembling.\looseness-1
+% Here, too, the availability of diverse models is crucial, and we hope to address that with our zoos.
+
+
